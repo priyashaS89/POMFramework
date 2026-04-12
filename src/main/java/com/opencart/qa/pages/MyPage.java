@@ -11,8 +11,12 @@ public class MyPage {
 		System.out.println("Hello App");
 		System.out.println("Hello App");
 	}
+		public void logout() {
+		System.out.println("Hello logout");
+
+	}
 }
 
 
-}
+
 
