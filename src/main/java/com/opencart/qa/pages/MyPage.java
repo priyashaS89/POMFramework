@@ -7,5 +7,12 @@ public class MyPage {
 	public void syao() {
 		System.out.println("Hello Page");
 	}
+	
+	public void login() {
+		System.out.println("Hello Login");
+		System.out.println("Hello Login");
+		System.out.println("Hello Login");
+		System.out.println("Hello Login");
+	}
 }
 
