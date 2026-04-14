@@ -15,23 +15,23 @@
 		</classes>
 	</test>
 
-<!--		<test name="Home Page Test">
+		<test name="Home Page Test">
 		<parameter name="browser" value="firefox"></parameter>
 		<classes>
 			<class name="com.opencart.qa.tests.HomePageTest" />
 		</classes>
 	</test>
--->
-	<!--	<test name="ProductInfo Page Test">
+
+		<test name="ProductInfo Page Test">
 		<parameter name="browser" value="chrome"></parameter>
 		<classes>
 			<class name="com.opencart.qa.tests.ProductInfoTest" />
 		</classes>
-	</test>-->
-	<!--	<test name="Registration Page Test">
+	</test>
+		<test name="Registration Page Test">
 		<parameter name="browser" value="chrome"></parameter>
 		<classes>
 			<class name="com.opencart.qa.tests.RegistrationPageTest" />
 		</classes>
-	</test>-->
+	</test>
 </suite> 
