@@ -102,6 +102,9 @@ public class DriverFactory {
 			case "prod":
 				fis = new FileInputStream("C:\\Users\\priya\\Documents\\JavaTraining\\FWD_Selenium\\src\\test\\resources\\config\\config.prod.properties");
 				break;
+			case "stage":
+				fis = new FileInputStream("C:\\Users\\priya\\Documents\\JavaTraining\\FWD_Selenium\\src\\test\\resources\\config\\config.stage.properties");
+				break;
 			case "uat":
 				fis = new FileInputStream("C:\\Users\\priya\\Documents\\JavaTraining\\FWD_Selenium\\src\\test\\resources\\config\\config.uat.properties");
 				break;
