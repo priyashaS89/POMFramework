@@ -87,7 +87,7 @@ pipeline
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             cleanWs()
             git branch: 'master', url: 'https://github.com/priyashaS89/POMFramework'
-            bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml -Denv=stage"
+            bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml -Denv=qa"
         }
     }
 }
@@ -119,7 +119,7 @@ pipeline
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             cleanWs()
             git branch: 'master', url: 'https://github.com/priyashaS89/POMFramework'
-            bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml -Denv=prod"
+            bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml -Denv=qa"
         }
     }
 }
