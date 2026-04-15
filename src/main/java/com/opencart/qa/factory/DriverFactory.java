@@ -1,9 +1,12 @@
 package com.opencart.qa.factory;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.openqa.selenium.OutputType;
@@ -12,10 +15,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
-
-import com.opencart.qa.exception.BrowserException;
-import com.opencart.qa.exception.FrameworkException;
+import com.opencart.qa.exception.*;
 
 
 public class DriverFactory {
@@ -32,25 +34,40 @@ public class DriverFactory {
 	 * @param browserName
 	 * @return it returns the driver value
 	 */
-	public WebDriver initDriver(Properties prop) {
-		
-		String browserName = prop.getProperty("browser");
-		System.out.println("browser name : " + browserName);
-		
-		highlight = prop.getProperty("highlight").trim();
-		optionsManager = new OptionsManager(prop);
-		
-		switch (browserName.trim().toLowerCase()) {
-		case "chrome":
-			tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
-			//driver = new ChromeDriver(optionsManager.getChromeOptions());
-			break;
-		case "firefox":
-			tlDriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
-			//driver = new FirefoxDriver(optionsManager.getFirefoxOptions());
-			break;
+		public WebDriver initDriver(Properties prop) {
+			
+			String browserName = prop.getProperty("browser");
+			System.out.println("browser name : " + browserName);
+			
+			highlight = prop.getProperty("highlight").trim();
+			optionsManager = new OptionsManager(prop);
+			
+			switch (browserName.trim().toLowerCase()) {
+			case "chrome":
+				if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+					//run tc's on grid
+					initRemoteDriver(browserName);
+				}else {
+					tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+				}
+				//driver = new ChromeDriver(optionsManager.getChromeOptions());
+				break;
+			case "firefox":
+				if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+					//run tc's on grid
+					initRemoteDriver(browserName);
+				}else {
+				tlDriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
+				}
+				//driver = new FirefoxDriver(optionsManager.getFirefoxOptions());
+				break;
 		case "edge":
+			if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+				//run tc's on grid
+				initRemoteDriver(browserName);
+			}else {
 			tlDriver.set(new EdgeDriver(optionsManager.getEdgeOptions()));
+			}
 			//driver = new EdgeDriver(optionsManager.getEdgeOptions());
 			break;
 		case "safari":
@@ -70,7 +87,35 @@ public class DriverFactory {
 		return getDriver();
 		
 	}
-	
+	/*
+	 * this will setup the RWD with hub url and browser options. It will supply the test to the remote grid machine
+	 * @param browserName
+	 * */
+	private void initRemoteDriver(String browserName) {
+		System.out.println("Runnung the test cases on selenium grid with broswer: "+browserName);
+		try {
+		switch(browserName.trim().toLowerCase())	{
+			case "chrome":
+				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getChromeOptions()));
+				break;
+			case "firefox":
+				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getChromeOptions()));
+				break;
+			case "edge":
+				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getChromeOptions()));
+				break;
+			default:
+				System.out.println("Please supply the right Bowser Name.Dockerised Selenium Grid only supports chromium,firefox and Edge");
+				break;
+		}
+		}
+		catch(MalformedURLException e){
+			e.printStackTrace();
+			System.out.println("=====================MALFORMED URL Exception========================");
+		}
+		
+	}
+
 	/**
 	 * returns the local copy of driver for a specific thread
 	 */
