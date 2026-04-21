@@ -49,7 +49,7 @@ pipeline
 
                 
      
-        stage('Publish Allure Reports') {
+        stage('Publish Allure Reports.') {
            steps {
                 script {
                     allure([
